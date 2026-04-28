@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 export default function InkHiveWebsite() {
   const [form, setForm] = useState({ name: "", email: "", product: "", quantity: "", placement: "Front", message: "", image: null, preview: null });
+  const [submitted, setSubmitted] = useState(false);
 
   const manifestations = [
   "I AM ENOUGH",
@@ -109,8 +110,38 @@ export default function InkHiveWebsite() {
             Create anything you want, or choose one of our two premium lines: PurposeWear and ManifestWear.
           </p>
           <div style={{ marginTop: 34, display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-            <Button>Explore Options</Button>
-            <Button light>See Guidelines</Button>
+            <button
+              style={{
+                border: "none",
+                borderRadius: 999,
+                padding: "14px 28px",
+                fontWeight: 900,
+                cursor: "pointer",
+                background: "#2b2118",
+                color: "white",
+                boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
+                fontSize: 16,
+              }}
+              onClick={() => document.getElementById("order")?.scrollIntoView({ behavior: "smooth" })}
+            >
+              Start Your Custom Design
+            </button>
+            <button
+              style={{
+                border: "2px solid #2b2118",
+                borderRadius: 999,
+                padding: "14px 28px",
+                fontWeight: 900,
+                cursor: "pointer",
+                background: "#fffaf3",
+                color: "#2b2118",
+                boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
+                fontSize: 16,
+              }}
+              onClick={() => document.getElementById("guidelines")?.scrollIntoView({ behavior: "smooth" })}
+            >
+              See Guidelines
+            </button>
           </div>
         </div>
       </section>
@@ -308,23 +339,41 @@ export default function InkHiveWebsite() {
         <div style={{ maxWidth: 1180, margin: "0 auto" }}>
           <p style={{ color: "#c8943f", fontWeight: 850, letterSpacing: 4, textTransform: "uppercase", fontSize: 13 }}>Simple Pricing</p>
           <h2 style={{ fontSize: "clamp(36px, 5vw, 58px)", margin: "10px 0", fontWeight: 950, letterSpacing: -2 }}>Start simple. Upgrade anytime.</h2>
+          <p style={{ opacity: 0.82, margin: "0 auto", maxWidth: 680, lineHeight: 1.6 }}>
+            Made-to-order. Premium quality. Designed just for you.
+          </p>
           <div style={{ marginTop: 34, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 22, textAlign: "left" }}>
             {[
-              ["Custom Studio", "$18–25", "Best for everyday custom printing."],
-              ["PurposeWear", "$35–45", "Premium birthdate-based Sanskrit design."],
-              ["ManifestWear", "$32–42", "Premium affirmation-based design."],
+              ["Custom Studio", "From $29", "Upload your own design, logo, photo, event idea, or custom text."],
+              ["PurposeWear", "$39", "Birthdate-based Sanskrit design with English meaning and soft watermark number."],
+              ["ManifestWear", "$35", "Affirmation-based premium design with a subtle Sanskrit accent."],
             ].map(([name, price, desc]) => (
               <div key={name} style={{ background: "white", color: "#2b2118", borderRadius: 30, padding: 30 }}>
                 <h3 style={{ fontSize: 25, margin: 0, fontWeight: 950 }}>{name}</h3>
                 <p style={{ margin: "20px 0 10px", fontSize: 42, fontWeight: 950, color: "#c8943f" }}>{price}</p>
                 <p style={{ color: "#6f5b47", lineHeight: 1.6 }}>{desc}</p>
+                <button
+                  style={{
+                    marginTop: 20,
+                    padding: "10px 18px",
+                    borderRadius: 999,
+                    border: "none",
+                    background: "#2b2118",
+                    color: "white",
+                    fontWeight: 800,
+                    cursor: "pointer",
+                  }}
+                  onClick={() => document.getElementById("order")?.scrollIntoView({ behavior: "smooth" })}
+                >
+                  Order Now
+                </button>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="quote" style={{ padding: "70px 24px" }}>
+      <section id="order" style={{ padding: "70px 24px" }}>
         <div style={{ maxWidth: 1050, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 38 }}>
           <div>
             <p style={{ color: "#c8943f", fontWeight: 850, letterSpacing: 4, textTransform: "uppercase", fontSize: 13 }}>Get Started</p>
@@ -342,6 +391,7 @@ export default function InkHiveWebsite() {
 
           <form onSubmit={(e) => {
               e.preventDefault();
+              setSubmitted(true);
               const subject = `New Order - ${form.product}`;
               const body = `Name: ${form.name}%0D%0AEmail: ${form.email}%0D%0AProduct: ${form.product}%0D%0AQuantity: ${form.quantity}%0D%0APlacement: ${form.placement}%0D%0AMessage: ${form.message}`;
               window.location.href = `mailto:creations@inkhivewear.com?subject=${subject}&body=${body}`;
@@ -401,6 +451,11 @@ export default function InkHiveWebsite() {
               Tip: PurposeWear works best on <b>Back</b>. ManifestWear works best on <b>Front</b>, but you can choose Front, Back, or both for any design.
             </div>
             <button style={{ border: "none", borderRadius: 999, padding: 16, background: "#c8943f", color: "white", fontWeight: 900, cursor: "pointer", fontSize: 16 }}>Submit Request</button>
+            {submitted && (
+              <p style={{ margin: 0, color: "green", fontWeight: 800, textAlign: "center" }}>
+                ✅ Thanks! We’ll reach out within 24 hours.
+              </p>
+            )}
           </form>
         </div>
       </section>
